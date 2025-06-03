@@ -1,0 +1,29 @@
+{
+  "name": "readbook",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bunx --bun concurrently --kill-others \"bun --watch server/index.ts\" \"vite --port 4000\"",
+    "prebuild": "tsc -b && bun build server/index.ts --outdir ./_api --target node --minify",
+    "clean": "rm -r _api && rm -r dist",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.3",
+    "@types/node": "^22.15.29",
+    "hono": "^4.7.11",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react-swc": "^3.9.0",
+    "concurrently": "^9.1.2",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-vercel": "^9.0.6"
+  }
+}
