@@ -14,4 +14,9 @@ export default defineConfig({
     vercel(),
     tailwindcss(),
   ],
+  build: {
+    rollupOptions: {
+      external: ["./server"],
+    },
+  },
 });

@@ -1,4 +1,10 @@
-import { z } from "zod/v4";
+import {
+  coerce,
+  enum as enum_,
+  object,
+  string,
+  type infer as Infer,
+} from "zod/v4";
 
 export const COLUMNS = [
   "topic",
@@ -15,13 +21,13 @@ export const COLUMNS = [
 
 export const RES_VALUES = ["25", "50", "100"] as const;
 
-export const SearchFilterSchema = z.object({
-  req: z.string().max(255).default(""),
-  column: z.enum(COLUMNS).default("title"),
-  sort: z.enum(COLUMNS).default("year"),
-  sortmode: z.enum(["ASC", "DESC"]).default("ASC"),
-  res: z.enum(RES_VALUES).default("25"),
-  page: z.coerce
+export const SearchFilterSchema = object({
+  req: string().max(255).default(""),
+  column: enum_(COLUMNS).default("title"),
+  sort: enum_(COLUMNS).default("year"),
+  sortmode: enum_(["ASC", "DESC"]).default("ASC"),
+  res: enum_(RES_VALUES).default("25"),
+  page: coerce
     .number()
     .min(1)
     .max(1000)
@@ -29,15 +35,15 @@ export const SearchFilterSchema = z.object({
     .transform((x) => String(x)),
 });
 
-export type SearchFilterDTO = z.infer<typeof SearchFilterSchema>;
+export type SearchFilterDTO = Infer<typeof SearchFilterSchema>;
 
-export const ServerQuerySchema = z.object({
-  req: z.string().max(255),
-  column: z.enum(COLUMNS),
-  sort: z.enum(COLUMNS),
-  sortmode: z.enum(["ASC", "DESC"]),
-  res: z.enum(RES_VALUES),
-  page: z.coerce
+export const ServerQuerySchema = object({
+  req: string().max(255),
+  column: enum_(COLUMNS),
+  sort: enum_(COLUMNS),
+  sortmode: enum_(["ASC", "DESC"]),
+  res: enum_(RES_VALUES),
+  page: coerce
     .number()
     .min(1)
     .max(1000)
