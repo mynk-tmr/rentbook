@@ -11,37 +11,80 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
+import { Route as SearchIndexImport } from './routes/search/index'
 
 // Create/Update Routes
+
+const IndexRoute = IndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SearchIndexRoute = SearchIndexImport.update({
+  id: '/search/',
+  path: '/search/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/search/': {
+      id: '/search/'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchIndexImport
+      parentRoute: typeof rootRoute
+    }
+  }
 }
 
 // Create and export the route tree
 
-export interface FileRoutesByFullPath {}
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/search': typeof SearchIndexRoute
+}
 
-export interface FileRoutesByTo {}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/search': typeof SearchIndexRoute
+}
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/search/': typeof SearchIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths: '/' | '/search'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to: '/' | '/search'
+  id: '__root__' | '/' | '/search/'
   fileRoutesById: FileRoutesById
 }
 
-export interface RootRouteChildren {}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  SearchIndexRoute: typeof SearchIndexRoute
+}
 
-const rootRouteChildren: RootRouteChildren = {}
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  SearchIndexRoute: SearchIndexRoute,
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
@@ -52,7 +95,16 @@ export const routeTree = rootRoute
   "routes": {
     "__root__": {
       "filePath": "__root.tsx",
-      "children": []
+      "children": [
+        "/",
+        "/search/"
+      ]
+    },
+    "/": {
+      "filePath": "index.tsx"
+    },
+    "/search/": {
+      "filePath": "search/index.tsx"
     }
   }
 }
