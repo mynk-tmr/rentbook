@@ -10,85 +10,85 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as SearchIndexImport } from './routes/search/index'
+import { Route as rootRoute } from "./routes/__root";
+import { Route as IndexImport } from "./routes/index";
+import { Route as SearchIndexImport } from "./routes/search/index";
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const SearchIndexRoute = SearchIndexImport.update({
-  id: '/search/',
-  path: '/search/',
+  id: "/search/",
+  path: "/search/",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/search/': {
-      id: '/search/'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof SearchIndexImport
-      parentRoute: typeof rootRoute
-    }
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/search/": {
+      id: "/search/";
+      path: "/search";
+      fullPath: "/search";
+      preLoaderRoute: typeof SearchIndexImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/search': typeof SearchIndexRoute
+  "/": typeof IndexRoute;
+  "/search": typeof SearchIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/search': typeof SearchIndexRoute
+  "/": typeof IndexRoute;
+  "/search": typeof SearchIndexRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/search/': typeof SearchIndexRoute
+  __root__: typeof rootRoute;
+  "/": typeof IndexRoute;
+  "/search/": typeof SearchIndexRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search'
-  id: '__root__' | '/' | '/search/'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: "/" | "/search";
+  fileRoutesByTo: FileRoutesByTo;
+  to: "/" | "/search";
+  id: "__root__" | "/" | "/search/";
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  SearchIndexRoute: typeof SearchIndexRoute
+  IndexRoute: typeof IndexRoute;
+  SearchIndexRoute: typeof SearchIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchIndexRoute: SearchIndexRoute,
-}
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {

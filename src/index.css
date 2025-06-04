@@ -1,1 +1,8 @@
 @import "tailwind-preset-mantine";
+
+@layer components {
+  [role="option"],
+  .mantine-Select-input {
+    @apply capitalize;
+  }
+}
