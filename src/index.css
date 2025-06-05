@@ -1,5 +1,11 @@
 @import "tailwind-preset-mantine";
 
+@layer base {
+  #root {
+    @apply bg-stone-100 min-h-full;
+  }
+}
+
 @layer components {
   [role="option"],
   .mantine-Select-input {

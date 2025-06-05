@@ -1,5 +1,5 @@
-import { Button } from "@mantine/core";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { ReadBookLanding } from "~/components/landing-page";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -7,8 +7,8 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   return (
-    <Link to="/search" tabIndex={-1}>
-      <Button variant="subtle">Go to search page</Button>
-    </Link>
+    <main className="h-screen grid place-items-center bg-zinc-200">
+      <ReadBookLanding />
+    </main>
   );
 }
