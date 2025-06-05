@@ -16,11 +16,16 @@ export function ReadBookLanding() {
         <Stack maw={500}>
           <Title order={1} size="3rem" fw={800}>
             Welcome to ReadBook
-            <img src="./favicon.ico" alt="Butterfly" className="inline" />
+            <img
+              src="./favicon.ico"
+              alt="Butterfly"
+              className="inline-block ml-2"
+            />
           </Title>
-          <Text size="lg" c="dimmed">
-            Discover, read, and share the books that inspire you. Knowledge is
-            power and should be available to everyone.
+          <Text size="lg">
+            📚 The world's largest open-source open-data library.
+            <br />
+            🤩 35+ million books free to download.
           </Text>
           {/*@ts-expect-error this is fine*/}
           <Link to="/search" tabIndex={-1} ref={(ele) => ele?.scrollIntoView()}>
