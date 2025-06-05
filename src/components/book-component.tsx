@@ -8,7 +8,7 @@ function defaultText(str: string) {
 export function BookCard(props: QueryLibgenReturn) {
   return (
     <Card shadow="md" padding="lg" radius="md" withBorder>
-      <article className="grid h-full place-content-between">
+      <article className="grid h-full place-content-between justify-stretch">
         <Text fw={700} size="md" className="overflow-x-hidden mb-2">
           {defaultText(props.title)}
         </Text>
@@ -59,6 +59,7 @@ export function BookCard(props: QueryLibgenReturn) {
               "https://search.worldcat.org/search?qt=worldcat_org_bks&q=" +
               props.title
             }
+            target="_blank"
           >
             See in World Catalogue
           </Button>

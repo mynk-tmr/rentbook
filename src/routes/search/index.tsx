@@ -50,7 +50,7 @@ function Results() {
 
   if (payload.success) return <Fallback>No results found</Fallback>;
 
-  return <Fallback>Server Didn't Respond. Try again</Fallback>;
+  return <Fallback>Server Error. Search Again</Fallback>;
 }
 
 function Fallback(props: { children: React.ReactNode }) {
