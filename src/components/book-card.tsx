@@ -22,7 +22,7 @@ export function BookCard(props: BookData) {
             {defaultText(props.extension)}
           </Badge>
           <Badge color="gray" variant="light">
-            {defaultText(props.size)}
+            {props.size.match(/\d+\s\w\w/)?.[0] || props.size}
           </Badge>
         </Group>
 

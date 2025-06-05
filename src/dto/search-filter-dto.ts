@@ -22,7 +22,7 @@ export const COLUMNS = [
 export const RES_VALUES = ["25", "50", "100"] as const;
 
 export const SearchFilterSchema = object({
-  req: string().min(4).max(255).catch(""),
+  req: string().trim().min(3).max(255).catch("Readbook"),
   column: enum_(COLUMNS).catch("title"),
   sort: enum_(COLUMNS).catch("year"),
   sortmode: enum_(["ASC", "DESC"]).catch("ASC"),
@@ -38,7 +38,7 @@ export const SearchFilterSchema = object({
 export type SearchFilterDTO = Infer<typeof SearchFilterSchema>;
 
 export const ServerQuerySchema = object({
-  req: string().min(4).max(255),
+  req: string().trim().min(3).max(255),
   column: enum_(COLUMNS),
   sort: enum_(COLUMNS),
   sortmode: enum_(["ASC", "DESC"]),

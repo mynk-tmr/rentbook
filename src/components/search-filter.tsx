@@ -32,10 +32,13 @@ const FieldSetWithin = () => {
         <TextInput
           name="req"
           defaultValue={search.req}
-          minLength={4}
+          minLength={3}
+          onInvalid={(e) =>
+            e.currentTarget.setCustomValidity("Atleast 3 length")
+          }
           label="Search Query"
           description="The text to search in Search Column"
-          placeholder="Pride and Prejudice"
+          placeholder="ReadBook"
           required
         />
 
