@@ -25,7 +25,7 @@ export const SearchFilterSchema = object({
   req: string().trim().min(3).max(255).catch("Readbook"),
   column: enum_(COLUMNS).catch("title"),
   sort: enum_(COLUMNS).catch("year"),
-  sortmode: enum_(["ASC", "DESC"]).catch("ASC"),
+  sortmode: enum_(["ASC", "DESC"]).catch("DESC"),
   res: enum_(RES_VALUES).catch("25"),
   page: coerce
     .number()

@@ -24,6 +24,9 @@ export function BookCard(props: BookData) {
           <Badge color="gray" variant="light">
             {props.size.match(/\d+\s\w\w/)?.[0] || props.size}
           </Badge>
+          <Badge color="orange" variant="light">
+            {defaultText(props.language)}
+          </Badge>
         </Group>
 
         <Text size="sm" mt="sm" className="font-semibold">

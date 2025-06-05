@@ -2,7 +2,7 @@
 
 @layer base {
   #root {
-    @apply bg-stone-100 min-h-full pb-12;
+    @apply bg-stone-100 min-h-full;
   }
 }
 

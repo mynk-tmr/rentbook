@@ -16,6 +16,7 @@ export function ReadBookLanding() {
         <Stack maw={500}>
           <Title order={1} size="3rem" fw={800}>
             Welcome to ReadBook
+            <img src="./favicon.ico" alt="Butterfly" className="inline" />
           </Title>
           <Text size="lg" c="dimmed">
             Discover, read, and share the books that inspire you. Knowledge is
