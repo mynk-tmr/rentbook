@@ -1,11 +1,11 @@
 import { Badge, Button, Card, Group, Text } from "@mantine/core";
-import type { QueryLibgenReturn } from "~/server/utils/libgen-next";
+import type { BookData } from "~/server/utils/libgen-next";
 
 function defaultText(str: string) {
   return str || "N/A";
 }
 
-export function BookCard(props: QueryLibgenReturn) {
+export function BookCard(props: BookData) {
   return (
     <Card shadow="md" padding="lg" radius="md" withBorder>
       <article className="grid h-full place-content-between justify-stretch">

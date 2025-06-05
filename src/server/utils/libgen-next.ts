@@ -20,7 +20,7 @@ const fields = [
 ] as const;
 
 type Keys = (typeof fields)[number];
-export type QueryLibgenReturn = Record<Keys | "coverUrl" | "dlink", string>;
+export type BookData = Record<Keys | "coverUrl" | "dlink", string>;
 
 interface QueryLibgenOptions {
   forceOneExtension: true;
@@ -41,11 +41,21 @@ export async function queryLibgen(
     mode: "cors",
   });
   const data = await res.text();
+  let { books, records } = scrapPage(data);
+  if (options?.forceOneExtension)
+    books = books.filter((item, i) => item.isbn !== books[i - 1]?.isbn);
+  return { books, records };
+}
+
+function scrapPage(data: string) {
   const $ = load(data);
-  const json2 = new Array<QueryLibgenReturn>();
+  const books = new Array<BookData>();
+  let records = $('font:icontains("files found")').text();
+  records = records.match(/\d+/)?.at(0) || "0";
+  if (records === "0") return { books, records };
 
   $('table[rules="cols"]').each((_, el) => {
-    const result = {} as QueryLibgenReturn;
+    const result = {} as BookData;
     for (let field of fields) {
       result[field] = $(el).find(`td:icontains("${field}")`).next().text();
       if (result["title"].length < 1) return;
@@ -53,12 +63,8 @@ export async function queryLibgen(
     const img = $(el).find("img");
     result["coverUrl"] = "https://libgen.is" + img.attr("src");
     result["dlink"] = "https://libgen.is" + img.parent().attr("href");
-    json2.push(result);
+    books.push(result);
   });
 
-  if (options?.forceOneExtension) {
-    const json = json2.filter((item, i) => item.isbn !== json2[i - 1]?.isbn);
-    return json;
-  }
-  return json2;
+  return { books, records };
 }

@@ -5,7 +5,7 @@ import { logger } from "hono/logger";
 import { treeifyError, ZodError } from "zod/v4";
 import { ServerQuerySchema } from "~/dto/search-filter-dto";
 import { getRandomGreet } from "./utils/get-random-greet";
-import { queryLibgen } from "./utils/libgen-next";
+import { queryLibgen, type BookData } from "./utils/libgen-next";
 
 const app = new Hono()
   .use(
@@ -32,4 +32,16 @@ serve({
   fetch: app.fetch,
 });
 
-export type ServerType = typeof app;
+export type ServerResponse = Promise<
+  | {
+      success: true;
+      data: {
+        books: BookData[];
+        records: string;
+      };
+    }
+  | {
+      success: false;
+      error: string[];
+    }
+>;
