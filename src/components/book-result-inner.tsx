@@ -57,7 +57,7 @@ export function BookResultsInner(props: { books: BookData[] }) {
               key={key}
               label={key.toUpperCase()}
               //@ts-expect-error
-              data={Array.from(filters[key])}
+              data={Array.from(filters[key]).sort((a, b) => a.localeCompare(b))}
               //@ts-expect-error
               value={currents[key]}
               onChange={(v) => {

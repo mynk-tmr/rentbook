@@ -23,7 +23,7 @@ export function ReadBookLanding() {
             power and should be available to everyone.
           </Text>
           {/*@ts-expect-error this is fine*/}
-          <Link to="/search" tabIndex={-1}>
+          <Link to="/search" tabIndex={-1} ref={(ele) => ele?.scrollIntoView()}>
             <Button size="md" radius="xl" color="indigo">
               Start Reading
             </Button>

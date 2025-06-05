@@ -43,7 +43,7 @@ function RouteComponent() {
 function Header() {
   return (
     <header>
-      <Title p={10} ta="center" c="cyan">
+      <Title p={10} ta="center">
         ReadBook
         <img
           src="./favicon.ico"
