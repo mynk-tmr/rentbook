@@ -1,71 +1,71 @@
-import { Badge, Button, Card, Group, Text } from "@mantine/core";
-import type { BookData } from "~/server/utils/libgen-next";
+import { Badge, Button, Card, Group, Text } from '@mantine/core';
+import { Link } from '@tanstack/react-router';
+import type { BookDataClient } from '~/server/utils/libgen-next';
 
 function defaultText(str: string) {
-  return str || "N/A";
+  return str || 'N/A';
 }
 
-export function BookCard(props: BookData) {
+export function BookCard(props: BookDataClient) {
   return (
-    <Card shadow="md" padding="lg" radius="md" withBorder>
-      <article className="grid h-full place-content-between justify-stretch">
-        <Text fw={700} size="md" className="overflow-x-hidden mb-2">
+    <Card shadow='md' padding='lg' radius='md' withBorder>
+      <article className='grid h-full place-content-between justify-stretch'>
+        <Text fw={700} size='md' className='overflow-x-hidden mb-2'>
           {defaultText(props.title)}
         </Text>
-        <Text c="dimmed">{defaultText(props.author)}</Text>
+        <Text c='dimmed'>{defaultText(props.author)}</Text>
 
-        <Group mt="xs" className="uppercase">
-          <Badge color="blue" variant="light">
+        <Group mt='xs'>
+          <Badge color='blue' variant='light'>
             {defaultText(props.year)}
           </Badge>
-          <Badge color="teal" variant="light">
-            {defaultText(props.extension)}
-          </Badge>
-          <Badge color="gray" variant="light">
-            {props.size.match(/\d+\s\w\w/)?.[0] || props.size}
-          </Badge>
-          <Badge color="orange" variant="light">
+          <Badge color='orange' variant='light'>
             {defaultText(props.language)}
+          </Badge>
+          <Badge color='teal' variant='light'>
+            {defaultText(props.pages).match(/\d+/)?.[0] || 'N/A'}{' '}
+            <span className='lowercase'>pages</span>
           </Badge>
         </Group>
 
-        <Text size="sm" mt="sm" className="font-semibold">
-          Publisher:{" "}
-          <span className="text-sky-800">{defaultText(props.publisher)}</span>
+        <Text size='sm' mt='sm' className='font-semibold'>
+          Publisher:{' '}
+          {props.publisher.length === 0 ? (
+            'N/A'
+          ) : (
+            <Link
+              className='font-semibold underline decoration-dotted text-sky-700'
+              to='/search'
+              search={{
+                column: 'publisher',
+                req: props.publisher,
+                page: 1,
+                res: '25',
+                sort: 'year',
+                sortmode: 'DESC',
+              }}
+            >
+              {props.publisher}
+            </Link>
+          )}
           <br />
-          Pages:{" "}
-          <b className="text-shadow-stone-600">{defaultText(props.pages)}</b>
-          <br />
-          ISBN:{" "}
-          <code className="bg-gray-100">
-            {defaultText(props.isbn.replace(/[,;].*/, ""))}
-          </code>
+          ISBN: <code>{defaultText(props.isbn.replace(/[,;].*/, ''))}</code>
         </Text>
         <br />
-
-        <div className="space-y-2">
-          <Button
-            fullWidth
-            variant="gradient"
-            gradient={{ from: "indigo", to: "cyan" }}
-            component="a"
-            href={props.dlink}
-            target="_blank"
-          >
-            Download
-          </Button>
-          <Button
-            fullWidth
-            variant="outline"
-            component="a"
-            href={
-              "https://search.worldcat.org/search?qt=worldcat_org_bks&q=" +
-              props.title
-            }
-            target="_blank"
-          >
-            See in World Catalogue
-          </Button>
+        <div className='flex gap-2 flex-wrap *:grow max-h-sm overflow-y-auto'>
+          {props.dlinks.map((dlink, i) => (
+            <Button
+              size='sm'
+              key={i}
+              variant='outline'
+              component='a'
+              href={dlink.url}
+              target='_blank'
+            >
+              {dlink.extension.toUpperCase()}{' '}
+              {dlink.size.match(/\d+\s\w\w/)?.[0] || dlink.size}
+            </Button>
+          ))}
         </div>
       </article>
     </Card>

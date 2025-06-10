@@ -1,16 +1,16 @@
-import { Button, Fieldset, Select, Switch, TextInput } from "@mantine/core";
-import { useNavigate, useSearch } from "@tanstack/react-router";
+import { Button, Fieldset, Select, Switch, TextInput } from '@mantine/core';
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import {
   COLUMNS,
   RES_VALUES,
   type SearchFilterDTO,
-} from "~/dto/search-filter-dto";
-import { usePendingForm } from "~/hooks/usePendingForm";
+} from '~/dto/search-filter-dto';
+import { usePendingForm } from '~/hooks/usePendingForm';
 
 export const SearchFilterUI = () => {
   const goto = useNavigate();
   const { onSubmit } = usePendingForm<SearchFilterDTO>(async (_, search) => {
-    goto({ search, to: "/search" });
+    goto({ search, to: '/search' });
   });
   return (
     <search>
@@ -23,66 +23,61 @@ export const SearchFilterUI = () => {
 
 const FieldSetWithin = () => {
   const search = useSearch({
-    from: "/search/",
+    from: '/search/',
   });
 
   return (
-    <Fieldset className="p-8 grid sm:grid-cols-2 gap-x-6">
-      <div className="space-y-6">
+    <Fieldset className='p-8 grid sm:grid-cols-2 gap-x-6'>
+      <div className='space-y-6'>
         <TextInput
-          name="req"
+          name='req'
           defaultValue={search.req}
           minLength={3}
           onInvalid={(e) =>
-            e.currentTarget.setCustomValidity("Atleast 3 length")
+            e.currentTarget.setCustomValidity('Atleast 3 length')
           }
-          label="Search Query"
-          description="The text to search in Search Column"
-          placeholder="ReadBook"
+          label='Search Query'
+          description='The text to search in Search Column'
+          placeholder='ReadBook'
           required
         />
 
         <Select
-          name="column"
+          name='column'
           defaultValue={search.column}
-          label="Search Column"
-          description="The column to search by"
+          label='Search Column'
+          description='The column to search by'
           data={COLUMNS}
           allowDeselect={false}
         />
       </div>
 
-      <div className="space-y-6">
+      <div className='space-y-6'>
         <Select
-          name="sort"
+          name='sort'
           defaultValue={search.sort}
-          label="Sort By"
-          description="The column to sort by"
+          label='Sort By'
+          description='The column to sort by'
           data={COLUMNS}
           allowDeselect={false}
         />
         <Switch
-          name="sortmode"
-          defaultChecked={search.sortmode === "DESC"}
-          label="Descending"
-          value={"DESC"}
+          name='sortmode'
+          defaultChecked={search.sortmode === 'DESC'}
+          label='Descending'
+          value={'DESC'}
         />
         <Select
-          name="res"
+          name='res'
           defaultValue={search.res}
-          label="Results per Page"
+          label='Results per Page'
           data={RES_VALUES}
           allowDeselect={false}
         />
       </div>
 
       <div>
-        <Button
-          loaderProps={{ type: "dots" }}
-          className="w-full mt-6 sm:-mt-4"
-          size="md"
-          type="submit"
-        >
+        <Button className='w-full mt-6 sm:-mt-4' size='md' type='submit'>
           Search
         </Button>
       </div>

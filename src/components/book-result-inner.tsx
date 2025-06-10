@@ -1,56 +1,44 @@
-import { Card, Select } from "@mantine/core";
-import { useState } from "react";
-import type { BookData } from "~/server/utils/libgen-next";
-import { BookCard } from "./book-card";
-import { Fallback } from "./book-results";
+import { Card, Select } from '@mantine/core';
+import { useState } from 'react';
+import type { BookData } from '~/server/utils/libgen-next';
+import { BookCard } from './book-card';
+import { Fallback } from './book-results';
 
 export function useBookFilter(books: BookData[]) {
   const filters = books.reduce(
     (acc, book) => {
-      acc.extension.add(book.extension);
-      acc.year.add(book.year || "N/A");
+      acc.year.add(book.year || 'N/A');
       acc.language.add(book.language);
       return acc;
     },
     {
-      extension: new Set<string>(),
       year: new Set<string>(),
       language: new Set<string>(),
     }
   );
-  const [extension, setExtension] = useState<string | null>(null);
   const [year, setYear] = useState<string | null>(null);
   const [language, setlanguage] = useState<string | null>(null);
   const filteredBooks = books.filter(
     (book) =>
-      (!extension || book.extension === extension) &&
-      (!year || book.year === year) &&
-      (!language || book.language === language)
+      (!year || book.year === year) && (!language || book.language === language)
   );
-  const currents = { extension, year, language };
+  const currents = { year, language };
   return {
     filters,
     filteredBooks,
     currents,
-    setExtension,
     setYear,
     setlanguage,
   };
 }
 
 export function BookResultsInner(props: { books: BookData[] }) {
-  const {
-    filters,
-    filteredBooks,
-    setExtension,
-    setlanguage,
-    setYear,
-    currents,
-  } = useBookFilter(props.books);
+  const { filters, filteredBooks, setlanguage, setYear, currents } =
+    useBookFilter(props.books);
   return (
     <>
-      <Card className="mx-6 mt-3">
-        <div className="flex gap-4 flex-wrap">
+      <Card className='mx-6 mt-3'>
+        <div className='flex gap-4 flex-wrap'>
           {Object.keys(filters).map((key) => (
             <Select
               w={120}
@@ -61,14 +49,12 @@ export function BookResultsInner(props: { books: BookData[] }) {
               //@ts-expect-error
               value={currents[key]}
               onChange={(v) => {
-                if (key === "extension") setExtension(v);
-                if (key === "year") setYear(v);
-                if (key === "language") setlanguage(v);
+                if (key === 'year') setYear(v);
+                if (key === 'language') setlanguage(v);
               }}
               onClear={() => {
-                if (key === "extension") setExtension(null);
-                if (key === "year") setYear(null);
-                if (key === "language") setlanguage(null);
+                if (key === 'year') setYear(null);
+                if (key === 'language') setlanguage(null);
               }}
               clearable
             />
@@ -76,7 +62,7 @@ export function BookResultsInner(props: { books: BookData[] }) {
         </div>
       </Card>
       {filteredBooks.length ? (
-        <section className="grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 py-2">
+        <section className='grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 py-2'>
           {filteredBooks.map((book) => (
             <BookCard key={book.id + book.extension} {...book} />
           ))}
