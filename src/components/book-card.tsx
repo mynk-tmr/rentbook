@@ -1,6 +1,6 @@
 import { Badge, Button, Card, Group, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import type { BookDataClient } from '~/server/utils/libgen-next';
+import type { BookDataClient } from '~/server/config';
 
 function defaultText(str: string) {
   return str || 'N/A';
@@ -23,7 +23,7 @@ export function BookCard(props: BookDataClient) {
             {defaultText(props.language)}
           </Badge>
           <Badge color='teal' variant='light'>
-            {defaultText(props.pages).match(/\d+/)?.[0] || 'N/A'}{' '}
+            {props.pages.match(/\d+/)?.[0] || 'N/A'}{' '}
             <span className='lowercase'>pages</span>
           </Badge>
         </Group>

@@ -1,6 +1,6 @@
 import { Card, Select } from '@mantine/core';
 import { useState } from 'react';
-import type { BookData } from '~/server/utils/libgen-next';
+import type { BookData } from '~/server/config';
 import { BookCard } from './book-card';
 import { Fallback } from './book-results';
 
