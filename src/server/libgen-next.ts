@@ -42,7 +42,7 @@ function scrapPage(data: string) {
     }
 
     record.dlinks = [dlink];
-    result.coverUrl = `${mirror}/${$(el).find('img').attr('src')}`;
+    record.coverUrl = `${mirror}/${$(el).find('img').attr('src')}`;
     books.push(record);
   });
   return { books, records };
